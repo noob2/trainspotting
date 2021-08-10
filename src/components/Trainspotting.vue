@@ -87,7 +87,9 @@ export default {
 
     axios.get('http://localhost:3000/journeys').then(({ data }) => {
       data.forEach(el => {
-        el.timetable = el.timetable.map((timetable, i) => ({ ...timetable, width: this.calculateWidth(el.timetable[i - 1]?.time, timetable.time) }))
+        el.timetable.forEach((timetable, i) => {
+          timetable.width = this.calculateWidth(el.timetable[i - 1]?.time, timetable.time)
+        })
         el.totalWidth = el.timetable.reduce((acc, el) => (acc += el.width), 0)
       })
       this.journeys = data
